@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import * as esbuild from 'esbuild-wasm';
 import { unpkgPathPlugin } from './plugins/esbuild-unpkg';
 import { fetchPlugin } from './plugins/fetch-plugin';
+import CodeEditor from './components/code-editor';
 
 const App = () => {
   const [input, setInput] = useState('');
@@ -66,6 +67,7 @@ const App = () => {
 
   return (
     <div>
+      <CodeEditor />
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
