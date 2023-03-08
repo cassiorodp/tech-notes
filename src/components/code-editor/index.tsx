@@ -2,7 +2,7 @@ import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import { useRef } from 'react';
-import './code-editor.css';
+import './index.css';
 import Highlighter from 'monaco-jsx-highlighter';
 import codeShift from 'jscodeshift';
 import './syntax.css';
