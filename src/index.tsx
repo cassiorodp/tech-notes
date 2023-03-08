@@ -1,46 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import ReactDOM from 'react-dom';
-import * as esbuild from 'esbuild-wasm';
-import { unpkgPathPlugin } from './plugins/esbuild-unpkg';
-import { fetchPlugin } from './plugins/fetch-plugin';
 import CodeEditor from './components/code-editor';
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
 import Preview from './components/preview';
+import bundler from './bundler';
 
 const App = () => {
   const [input, setInput] = useState('');
   const [code, setCode] = useState('');
-  const serviceRef = useRef<any>();
-
-  const startService = async () => {
-    serviceRef.current = await esbuild.startService({
-      worker: true,
-      wasmURL: 'https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm',
-    });
-  };
 
   const onClick = async () => {
-    if (!serviceRef.current) {
-      return;
-    }
-
-    const result = await serviceRef.current.build({
-      entryPoints: ['index.js'],
-      bundle: true,
-      write: false,
-      plugins: [unpkgPathPlugin(), fetchPlugin(input)],
-      define: {
-        'process.env.NODE_ENV': '"production"',
-        global: 'window',
-      },
-    });
-
-    setCode(result.outputFiles[0].text);
+    const output = await bundler(input);
+    setCode(output);
   };
-
-  useEffect(() => {
-    startService();
-  }, []);
 
   return (
     <div>
