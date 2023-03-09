@@ -9,6 +9,10 @@
   line-height: 1;
 }
 
+.text-editor.card {
+  cursor: pointer;
+}
+
 .text-editor .w-md-editor-bar svg {
   display: none;
 }
